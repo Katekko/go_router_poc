@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:test_route/routes.dart';
+import 'package:test_route/go_router_builder.dart';
 
 import 'navigation.dart';
 
@@ -13,9 +12,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: Navigation.router,
-    );
+    return MaterialApp.router(routerConfig: Navigation.router);
   }
 }
 
@@ -25,17 +22,22 @@ class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('First Screen'),
             ElevatedButton(
-              onPressed: () => context.push(Routes.second),
+              onPressed: () => SecondScreenRoute().go(context),
               child: const Text('Go to Second'),
             ),
             ElevatedButton(
-              onPressed: () => context.push(Routes.home),
+              onPressed: () => ThirdScreenRoute().go(context),
+              child: const Text('Go to Third'),
+            ),
+            ElevatedButton(
+              onPressed: () => HomeScreenRoute().go(context),
               child: const Text('OPEN NESTED NAVIGATION'),
             )
           ],
@@ -51,13 +53,14 @@ class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Second Screen'),
             ElevatedButton(
-              onPressed: () => context.push(Routes.third),
+              onPressed: () => ThirdScreenRoute().go(context),
               child: const Text('Go to Third'),
             )
           ],
@@ -73,13 +76,14 @@ class ThirdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Third Screen'),
             ElevatedButton(
-              onPressed: () => context.go(Routes.first),
+              onPressed: () => FirstScreenRoute().go(context),
               child: const Text('Back to First'),
             )
           ],
@@ -101,8 +105,8 @@ class HomeScreen extends StatelessWidget {
           children: [
             const Text('Home Screen'),
             ElevatedButton(
-              onPressed: () => context.go(Routes.first),
-              child: const Text('Back to First'),
+              onPressed: () => ThirdScreenRoute().go(context),
+              child: const Text('Back to Third'),
             )
           ],
         ),
@@ -132,7 +136,7 @@ class SchoolScreen extends StatelessWidget {
           children: [
             const Text('School Screen'),
             ElevatedButton(
-              onPressed: () => context.go(Routes.second),
+              onPressed: () => SecondScreenRoute().go(context),
               child: const Text('Back to second'),
             )
           ],
