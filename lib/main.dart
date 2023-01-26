@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:test_route/go_router_builder.dart';
 
 import 'navigation.dart';
@@ -50,6 +51,10 @@ class FirstScreen extends StatelessWidget {
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
 
+  void openDialog(BuildContext context) {
+    showDialog(context: context, builder: (_) => const TestDialog());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +67,10 @@ class SecondScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => ThirdScreenRoute().go(context),
               child: const Text('Go to Third'),
+            ),
+            ElevatedButton(
+              onPressed: () => openDialog(context),
+              child: const Text('Open dialog'),
             )
           ],
         ),
@@ -142,6 +151,20 @@ class SchoolScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TestDialog extends StatelessWidget {
+  const TestDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Teste dialog'),
+      actions: [
+        TextButton(onPressed: () => context.pop(), child: const Text('voltar'))
+      ],
     );
   }
 }
